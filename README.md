@@ -1,74 +1,178 @@
-<<<<<<< HEAD
 # MERN-PG-Docker
-=======
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A full-stack web application utilizing the MERN stack (MongoDB, Express.js, React.js, Node.js) with PostgreSQL integration, containerized using Docker.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Project Structure](#project-structure)
+- [Contributing](#contributing)
+- [License](#license)
 
-### `npm start`
+## Project Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+This project is a comprehensive web application that combines the MERN stack with PostgreSQL. The backend consists of two separate services:
+1. **backend**: Uses MongoDB, which runs on a local installation.
+2. **backend-dashboard**: Uses PostgreSQL, which is containerized using Docker.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The frontend is developed using React.js with Material-UI for styling. Docker is employed to containerize the PostgreSQL service, ensuring consistent environments across different setups.
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **User Authentication**: Secure login and registration system.
+- **Data Management**: Efficient handling of data using MongoDB and PostgreSQL.
+- **Responsive Design**: User-friendly interface optimized for various devices.
+- **Containerization**: PostgreSQL is managed within a Docker container.
 
-### `npm run build`
+## Technologies Used
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Frontend
+- React.js
+- Material-UI
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Backend
+- Node.js
+- Express.js
+- MongoDB (Local Installation)
+- PostgreSQL (Docker Container)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Containerization
+- Docker (Used for PostgreSQL, `docker-compose.yml` is located in `backend-dashboard`)
 
-### `npm run eject`
+## Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Before you begin, ensure you have the following installed:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [Node.js](https://nodejs.org/) (v14 or later)
+- [Docker](https://www.docker.com/)
+- Local MongoDB installation
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Installation
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/SathwikGit/MERN-PG-Docker.git
+cd MERN-PG-Docker
+```
 
-## Learn More
+### 2. Set Up Environment Variables
+- Create a `.env` file in both `backend` and `backend-dashboard` directories.
+- Add the following variables:
+```env
+# backend (MongoDB)
+NODE_ENV=development
+PORT=5000
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# backend-dashboard (PostgreSQL)
+NODE_ENV=development
+PORT=5002
+POSTGRES_URI=your_postgresql_uri
+JWT_SECRET=your_jwt_secret
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 3. Install Dependencies
+If the `node_modules` directory is already present in each service (`backend`, `backend-dashboard`, and `frontend`), running `npm install` is **not strictly required**. However, it ensures that all dependencies are correctly installed according to `package.json`. If you face issues, consider reinstalling dependencies by running:
 
-### Code Splitting
+#### Backend (MongoDB)
+```bash
+cd backend
+npm install
+```
+#### Backend-Dashboard (PostgreSQL)
+```bash
+cd ../backend-dashboard
+npm install
+```
+#### Frontend
+```bash
+cd ../frontend
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Usage
 
-### Analyzing the Bundle Size
+### Running with Docker (PostgreSQL Backend)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+1. **Navigate to `backend-dashboard`** (where `docker-compose.yml` is located):
+   ```bash
+   cd backend-dashboard
+   ```
+2. **Build and Start Containers**
+   ```bash
+   docker-compose up --build
+   ```
 
-### Making a Progressive Web App
+3. **Access the Application**
+   - Frontend: `http://localhost:3000`
+   - MongoDB Backend API: `http://localhost:5000/api`
+   - PostgreSQL Backend API: `http://localhost:5002/api`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Running Locally (Without Docker)
 
-### Advanced Configuration
+1. **Start the MongoDB Backend**
+   ```bash
+   cd backend
+   npm run dev
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+2. **Start the PostgreSQL Backend**
+   ```bash
+   cd ../backend-dashboard
+   npm run dev
+   ```
 
-### Deployment
+3. **Start the Frontend**
+   ```bash
+   cd ../frontend
+   npm start
+   ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Project Structure
 
-### `npm run build` fails to minify
+```
+MERN-PG-Docker/
+├── backend/ (MongoDB Backend)
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   ├── middleware/
+│   ├── server.js
+│   └── ...
+├── backend-dashboard/ (PostgreSQL Backend, includes Docker setup)
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── config/
+│   ├── middleware/
+│   ├── server.js
+│   ├── docker-compose.yml
+│   └── ...
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.js
+│   │   └── ...
+│   ├── public/
+│   ├── package.json
+│   └── ...
+├── .env
+└── README.md
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
->>>>>>> 1f76aac (App completed successfully)
+## Contributing
+
+Contributions are welcome! Please fork the repository and create a pull request with your changes.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
